@@ -299,9 +299,9 @@ copy_to_fb(
 			unsigned live = *sq & 1;
 			if (live)
 			{
-				r += 80;
-				g += 5;
-				b += 30;
+				r += 15;
+				g += 0;
+				b += 80;
 				if (r > 0xFF)
 					r = 0xFF;
 				if (g > 0xFF)
