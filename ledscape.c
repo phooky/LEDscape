@@ -444,13 +444,6 @@ ledscape_soft_init(
 	printf("%d\n", leds->ws281x->num_pixels);
 
 
-	// Watch for a done response that indicates a proper startup
-	// \todo timeout if it fails
-	printf("waiting for response\n");
-	while (!leds->ws281x->response)
-		;
-	printf("got response\n");
-
 	return leds;
 }
 
