@@ -48,13 +48,13 @@ typedef struct ledscape ledscape_t;
 extern ledscape_t *
 ledscape_init(
 	unsigned width,
-	unsigned height,
+	unsigned height
 );
 
 extern ledscape_t *
 ledscape_soft_init(
 	unsigned width,
-	unsigned height,
+	unsigned height
 );
 
 
