@@ -55,8 +55,7 @@ main(int argc, char** argv)
 		}
 	}
 			
-
-	while (1)
+        for(uint8_t i=0;i<20;i++)
 	{
 		ledscape_draw(leds, p);
 		usleep(20000);
