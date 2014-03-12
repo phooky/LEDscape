@@ -17,7 +17,8 @@ def loadKey(path='apikey'):
     cons_key = keydata['Consumer Key']
 
 def display(img,face=0,rotation=0):
-    subprocess.call("./cube-image",stdin=img.tostring())
+    p=subprocess.Popen(["cube-image"],stdin=subprocess.PIPE)
+    p.communicate(input=img.tostring())
     pass
 
 def showTopics(topics):
