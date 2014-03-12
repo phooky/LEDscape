@@ -365,6 +365,95 @@ ledscape_init(
 	return leds;
 }
 
+ledscape_t *
+ledscape_soft_init(
+	unsigned width,
+	unsigned height
+)
+{
+	pru_t * const pru = pru_init(0);
+#ifdef CONFIG_LED_MATRIX
+	const size_t frame_size = 16 * 8 * width * 3; //LEDSCAPE_NUM_STRIPS * 4;
+#else
+	const size_t frame_size = 48 * width * 8 * 3;
+#endif
+
+#if 0
+	if (2 *frame_size > pru->ddr_size)
+		die("Pixel data needs at least 2 * %zu, only %zu in DDR\n",
+			frame_size,
+			pru->ddr_size
+		);
+#endif
+
+	ledscape_t * const leds = calloc(1, sizeof(*leds));
+
+	*leds = (ledscape_t) {
+		.pru		= pru,
+		.width		= width,
+		.height		= height,
+		.ws281x		= pru->data_ram,
+		.frame_size	= frame_size,
+		.matrix		= calloc(sizeof(*leds->matrix), 1),
+	};
+
+#ifdef CONFIG_LED_MATRIX
+	*(leds->matrix) = (led_matrix_config_t) {
+		.matrix_width	= 64,
+		.matrix_height	= 16,
+		.matrix		= {
+			{ 0, 0 },
+			{ 0, 16 },
+
+			{ 0, 32 },
+			{ 0, 48 },
+
+			{ 0, 64 },
+			{ 0, 80 },
+
+			{ 0, 96 },
+			{ 0, 112 },
+
+			{ 0, 0 },
+			{ 0, 8 },
+			{ 0, 16 },
+			{ 0, 24 },
+			{ 0, 32 },
+			{ 0, 40 },
+			{ 0, 48 },
+			{ 0, 56 },
+		},
+	};
+
+	*(leds->ws281x) = (ws281x_command_t) {
+		.pixels_dma	= 0, // will be set in draw routine
+		.num_pixels	= (leds->matrix->matrix_width * 3) * 16,
+		.command	= 0,
+		.response	= 0,
+	};
+#else
+	// LED strips, not matrix output
+	*(leds->ws281x) = (ws281x_command_t) {
+		.pixels_dma	= 0, // will be set in draw routine
+		.num_pixels	= width * 8, // panel height
+		.command	= 0,
+		.response	= 0,
+	};
+#endif
+
+	printf("%d\n", leds->ws281x->num_pixels);
+
+
+	// Watch for a done response that indicates a proper startup
+	// \todo timeout if it fails
+	printf("waiting for response\n");
+	while (!leds->ws281x->response)
+		;
+	printf("got response\n");
+
+	return leds;
+}
+
 
 void
 ledscape_close(

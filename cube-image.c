@@ -17,7 +17,12 @@ main(int argc, char** argv)
 {
 	const int width = 128;
 	const int height = 128;
-	ledscape_t * const leds = ledscape_init(width, height);
+	ledscape_t * const leds;
+        if (argc > 1) {
+          leds = ledscape_soft_init(width, height);
+        } else {
+          leds = ledscape_init(width, height);
+        }
 	printf("init done\n");
 	time_t last_time = time(NULL);
 	unsigned last_i = 0;
