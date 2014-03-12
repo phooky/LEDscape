@@ -25,7 +25,7 @@ def display(img,face=0,rotation=0):
         imgdata.append(r)
         imgdata.append(0)
     imgdata = bytearray(imgdata)
-    p=subprocess.Popen(["./cube-image"],stdin=subprocess.PIPE)
+    p=subprocess.Popen(["./cube-image","1"],stdin=subprocess.PIPE)
     p.communicate(input=imgdata)
     #print "image"
     #print img.size

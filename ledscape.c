@@ -424,7 +424,7 @@ ledscape_soft_init(
 			{ 0, 56 },
 		},
 	};
-
+      
 	*(leds->ws281x) = (ws281x_command_t) {
 		.pixels_dma	= 0, // will be set in draw routine
 		.num_pixels	= (leds->matrix->matrix_width * 3) * 16,
