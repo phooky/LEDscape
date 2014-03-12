@@ -13,7 +13,7 @@
 
 
 int
-main(void)
+main(int argc, char** argv)
 {
 	const int width = 128;
 	const int height = 128;
