@@ -20,10 +20,10 @@ def display(img,face=0,rotation=0):
     img = img.convert('RGB')
     imgdata = []
     for (r,g,b) in img.getdata():
-        imgdata.append(0)
-        imgdata.append(r)
-        imgdata.append(g)
         imgdata.append(b)
+        imgdata.append(g)
+        imgdata.append(r)
+        imgdata.append(0)
     imgdata = bytearray(imgdata)
     p=subprocess.Popen(["./cube-image"],stdin=subprocess.PIPE)
     p.communicate(input=imgdata)
