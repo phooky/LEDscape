@@ -17,7 +17,7 @@ main(int argc, char** argv)
 {
 	const int width = 128;
 	const int height = 128;
-	ledscape_t * const leds;
+	ledscape_t * leds;
         if (argc > 1) {
           leds = ledscape_soft_init(width, height);
         } else {
